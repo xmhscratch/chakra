@@ -1,0 +1,21 @@
+{
+    "name": "chakra",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {},
+    "repository": {
+        "type": "git",
+        "url": "git@github.com:xmhscratch/chakra.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "MIT",
+    "devDependencies": {},
+    "dependencies": {
+        "ejs": "^2.5.7",
+        "solais": "ssh+git://git@github.com:xmhscratch/solais.git",
+        "solais-server": "ssh+git://git@github.com:xmhscratch/solais-server.git",
+        "solais-server-static": "ssh+git://git@github.com:xmhscratch/solais-server-static.git"
+    }
+}

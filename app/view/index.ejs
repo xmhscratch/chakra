@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+</head>
+
+<body style="display: none;">
+    <script type="text/javascript" src="<%- config('urls.asset') %>/script/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="<%- config('urls.asset') %>/script/jquery.pjax.js"></script>
+    <script type="text/javascript" src="<%- config('urls.asset') %>/nprogress/nprogress.js"></script>
+    <script type="text/javascript" src="<%- config('urls.assetDev') %>/base.js"></script>
+
+    <div id="container">
+        <%- body %>
+    </div>
+
+    <div id="modal"></div>
+
+    <script type="text/javascript">
+        window.__pjax = {
+            container: '#container',
+            timeout: 0,
+            replace: true,
+        }
+
+        appl.on('setup:complete', function() {
+            jQuery(document.body).show()
+        })
+
+        appl.on('initialized', function() {
+            jQuery('#container').css({
+                minHeight: jQuery(window).outerHeight()
+            })
+
+            jQuery(window).bind('resize', function() {
+                jQuery('#container').css({
+                    minHeight: jQuery(window).outerHeight()
+                })
+            })
+
+            if (jQuery.support.pjax) {
+                jQuery(document).pjax('a[data-pjax]', window.__pjax)
+            }
+
+            NProgress.configure({
+                showSpinner: false
+            })
+
+            jQuery(document).ajaxStart(function() {
+                NProgress.start()
+            }).ajaxStop(function() {
+                NProgress.done()
+            })
+
+            appl.history.listenBefore(function(location) {
+                NProgress.start()
+                NProgress.set(0.4)
+                NProgress.done()
+            })
+        })
+
+        appl.setup('abc', [
+            {
+                key: 'main',
+                payload: 'http://devtest:9000/config.json',
+                devServer: 'http://devtest:9999/webpack-dev-server.js',
+                mainApp: 'http://devtest:9999/main.js',
+            }
+        ])
+    </script>
+</body>
+
+</html>
